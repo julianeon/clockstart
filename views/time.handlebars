@@ -1,0 +1,49 @@
+<p class="blackwhite">{{topic}}</p>
+<p id="elapsed"></p>
+<p id="left"></p>
+<h1 id="result"></h1>
+<canvas id="myChart" width="400" height="400"></canvas>
+<script>
+window.onload=function epochClock() {
+    var d = new Date();
+    var epoch_now = d.getTime()/1000;
+    var seconds_passed=Math.floor(epoch_now-{{watch}});
+    var seconds_left=Math.floor({{moment}}-seconds_passed);
+    var quotient=(seconds_passed/{{moment}})*100;
+    quotient=Math.floor(quotient*100)/100;
+    var remainder=100-quotient;
+
+    if (seconds_left < 0){
+      seconds_left=0;
+    }
+
+    document.getElementById("elapsed").innerHTML = seconds_passed+" seconds";
+    document.getElementById("left").innerHTML = seconds_left+" seconds";
+    document.getElementById("result").innerHTML = quotient+"%";
+
+    if (quotient > 100){
+      remainder=0;
+    }
+
+    var data = [{
+        value: quotient,
+        color: "#003F87"
+    }, {
+        value: remainder,
+        color: "#FFEE00"
+    }
+    ]
+
+    var options = {
+        animation: false
+    };
+
+
+    //Get the context of the canvas element we want to select
+    var c = $('#myChart');
+    var ct = c.get(0).getContext('2d');
+    /*************************************************************************/
+    myNewChart = new Chart(ct).Pie(data, options);
+    setTimeout(epochClock, 1000);
+}
+</script>
