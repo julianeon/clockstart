@@ -2,7 +2,7 @@
 /**
  * Module dependencies.
  */
-
+require('newrelic');
 var express = require('express');
 var exphbs = require('express3-handlebars');
 var routes = require('./routes/index');
